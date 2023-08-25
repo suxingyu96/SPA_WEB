@@ -1,0 +1,24 @@
+{% extends 'main/base_decision_maker.html' %} {% block title %}Decision Maker Dashboard{% endblock %}
+{% load crispy_forms_tags %} {% block content %}
+{%if students_and_selected_projects %}
+    <a type="button" class="btn btn-primary" href="/dashboard/allocation">Make Allocation</a>
+    <form class="list-group" >
+        {% csrf_token %}
+        {% for student, projects in students_and_selected_projects.items %}
+        <div>
+            <h6>Student name:{{student}}</h6>
+            <h6>Selected Projects:</h6>
+            <ul>
+            {%for project in projects%}
+            <li>
+            {{project}} ({{project.project.id}} )
+            </li>
+            {% endfor %}
+        </ul>
+        <hr>
+        </div>
+        {% endfor %}
+    </form>
+{% endif%}
+
+{% endblock %}

@@ -1,0 +1,33 @@
+<div class="d-flex justify-content-between">
+   
+    <section class="col-6">
+   
+    {% if preference_list %}
+            {% csrf_token %}
+            <form class="sortable list-group" hx-trigger="end" hx-post="{% url 'sort' %}" hx-target='#projects_rank'>
+                <div class="htmx-indicator">Updating...</div>
+                {% for project in preference_list %}
+                <div>
+                    <input type="hidden" name="project_order" value="{{ project.id }}" />
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a>
+                        #{{project.order}}  {{ project.project.project_name }}
+                        </a>
+                        <span class="badge badge-pill badge-danger"  
+                            style="cursor: pointer;"
+                            hx-target="#projects_rank"
+                            hx-delete="{% url 'student_delete_project' project.id %}"
+                            hx-confirm="Are you sure you wish to delete?"
+                            >X
+                            </span> 
+                    </li>
+                </div>
+                {% endfor %}
+            </form>
+            
+        {% else %}
+            <p>You haven't select any project.</p>
+        {% endif %}
+
+    </section>
+    </div>

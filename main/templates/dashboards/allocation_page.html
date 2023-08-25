@@ -1,0 +1,19 @@
+{% extends 'main/base_decision_maker.html' %} {% block title %}Allocation Page{% endblock %} {%
+load crispy_forms_tags %} {% block content %}
+<div class="d-flex justify-content-between d-flex">
+  {% if results%} {% csrf_token %}
+  <ul>
+    {% for order,solution in results.items %}
+    <li>
+      <h6>Solution {{order}}:</h6>
+      <br />
+      {% for item in solution %} {{item}} {% endfor %}
+      {% comment %} <a href="{% url 'export_result' solution %}">Export result</a> {% endcomment %}
+      <hr />
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  
+</div>
+{% endblock %}

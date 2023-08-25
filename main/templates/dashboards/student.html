@@ -1,0 +1,36 @@
+{% extends 'main/base_stu.html' %} {% block title %}Student Dashboard{% endblock %}
+{% load crispy_forms_tags %} {% block content %}
+
+<h1>Hi, {{ user.get_username }}</h1>
+
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>Descitpion</th>
+        <th>Supervisor</th>
+      </tr>
+    </thead>
+    <tr>
+      {% for project in project_list %}
+      <td>{{project.project_name}}</td>
+      <td>{{project.description}}</td>
+      <td>{{project.supervisor}}</td>
+      <td>
+        {% comment %} {% if project not in preference_list%} {% endcomment %}
+        <form action="{% url 'select_project' id=project.id %}" method="POST">
+          {% csrf_token %}
+          <button class="btn btn-info" type="submit">
+            <i class="fa">Select</i>
+          </button>
+        </form>
+      </td> 
+    </tr>
+
+    <tr>
+      {% endfor %}
+    </tr>
+  </table>
+</div>
+{% endblock %}

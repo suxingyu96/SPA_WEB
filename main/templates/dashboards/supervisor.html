@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %} 
+{% block title %}Supervisor Dashboard{% endblock%} 
+{% load crispy_forms_tags %} {% block content %}
+<h1>Hi, {{ user.get_username }}</h1>
+<a href="supervisor/addproject">
+  <button type="button" class="btn btn-success">Add new project</button>
+</a>
+<br />
+<div>
+  <main class="d-flex">
+      <section id="sup_projects_rank" class="col-12">
+          {% include 'dashboards/partials/sup_projects_rank.html' %}
+      </section>
+  </main>
+</div>
+
+{% endblock %}

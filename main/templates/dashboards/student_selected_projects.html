@@ -1,0 +1,16 @@
+{% extends 'main/base_stu.html' %} 
+{% block title %}Student Dashboard{% endblock %}
+{% load crispy_forms_tags %} 
+{% block content %}
+{% comment %} <h1>Hi, {{ user.get_username }}</h1>
+<h2>Selected Projects</h2> {% endcomment %}
+{% comment %} <div class="align-center col-10"> {% endcomment %}
+<div>
+  <main class="d-flex">
+      <section id="projects_rank" class="col-12">
+          {% include 'dashboards/partials/projects_rank.html' %}
+      </section>
+  </main>
+</div>
+{% endblock %}
+

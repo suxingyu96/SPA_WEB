@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-between">
+   
+    <section class="col-12">
+   
+    {% if project_list %}
+            {% csrf_token %}
+            <form class="sortable list-group" hx-trigger="end" hx-post="{% url 'sup_sort' %}" hx-target='#sup_projects_rank'>
+                <div class="htmx-indicator">Updating...</div>
+                {% for project in project_list %}
+                <div>
+                    <input type="hidden" name="project_order" value="{{ project.id }}" />
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="col-10">
+                        <td>#{{project.order}}  {{ project.project_name }}</td>
+                        <br>
+                        <td>{{ project.description}}</td>
+                        </div>
+                        <div>
+                        <a href="{% url 'update_project' project.id %}">
+                        <span class="badge badge-pill badge-info"  
+                            style="cursor: pointer;"
+                            hx-target="#sup_projects_rank"
+                            {% comment %} hx-get = "{% url 'update_project' project.id %}" {% endcomment %}
+                            {% comment %} hx-post="{% url 'update_project' project.id %}" {% endcomment %}
+                            >Update
+                            </span>
+                        </a> 
+                        <span class="badge badge-pill badge-danger"  
+                            style="cursor: pointer;"
+                            hx-target="#sup_projects_rank"
+                            hx-delete="{% url 'delete_project' project.id %}"
+                            hx-confirm="Are you sure you wish to delete?"
+                            >X
+                            </span> 
+                        </div>
+                    </li>
+                </div>
+                {% endfor %}
+            </form>
+            
+        {% else %}
+            <p>You project.</p>
+        {% endif %}
+
+    </section>
+    </div>
