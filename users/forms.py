@@ -16,17 +16,19 @@ class StudentSignUpForm(UserCreationForm):
     def save(self):
         user = super().save(commit=False)
         user.email = self.cleaned_data.get('email')
-        user.student_id = self.cleaned_data.get('student_id')
-        user.course_id = self.cleaned_data.get('course_id')
-        user.is_student = True
-        user.last_login = datetime.now()
         user.save()
         student = Student.objects.create(user=user)
-        return user
+        student.student_id = self.cleaned_data.get('student_id')
+        student.course_id = self.cleaned_data.get('course_id')
+        student.is_student = True
+        student.last_login = datetime.now()
+        student.save()
+        return student
 
 
 class SupervisorSignUpForm(UserCreationForm):
     email=forms.EmailField(required=True)
+    # capacity = forms.CharField(required=True)
     capacity = forms.CharField(required=True)
     class Meta(UserCreationForm.Meta):
         model = User
@@ -35,11 +37,13 @@ class SupervisorSignUpForm(UserCreationForm):
     def save(self):
         user = super().save(commit=False)
         user.email=self.cleaned_data.get('email')
-        user.capacity = self.cleaned_data.get('capacity')
-        user.is_supervisor = True
-        user.last_login = datetime.now()
         user.save()
         supervisor = Supervisor.objects.create(user=user)
+        supervisor.capacity = self.cleaned_data.get('capacity')
+        supervisor.is_supervisor = True
+        supervisor.last_login = datetime.now()
+        # user.save()
+        # supervisor = Supervisor.objects.create(user=user)
         supervisor.save()
 
         return supervisor

@@ -4,7 +4,10 @@ from algo.project import Project as algo_project
 from algo.supervisor import Supervisor as algo_supervisor
 from algo.student import Student as algo_student
 from users.models import Supervisor, Student
-
+import matplotlib.pyplot as plt
+import io
+import urllib, base64
+ 
 
 def get_max_order(student) -> int:
     existing_projects = ProjectList.objects.filter(student=student)
@@ -84,3 +87,14 @@ def get_students_list() -> list:
         student_list.append(stu)
     
     return student_list
+
+def get_fig():
+    plt.plot(range(10))
+    fig = plt.gcf()
+    #convert graph into dtring buffer and then we convert 64 bit code into image
+    buf = io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri =  urllib.parse.quote(string)
+    return uri

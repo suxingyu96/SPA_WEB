@@ -184,7 +184,11 @@ def allocation(request):
         print(stu.getProjectList())
 
     supervisors = get_supervisors_list()
-    res = SPA_genetic_algorithm(students, projects, supervisors).run()
+
+    pool_size = 200
+    mutate_rate = 0.01
+    crossover_rate = 0.8
+    res = SPA_genetic_algorithm(students, projects, supervisors,pool_size, mutate_rate, crossover_rate).run(False)
     res_list = {}
     count = 1
     for individual in res:
@@ -209,7 +213,7 @@ def allocation(request):
     writer = csv.writer(response)
     for order,solution in res_list.items():
         writer.writerow(['Solution', order ])
-        writer.writerow (['Student', 'Project', 'Supervisor'])
+        writer.writerow (['Student', 'Project'])
         result = solution[0]
         for student,project in result.items():
              writer.writerow ([student, project])
